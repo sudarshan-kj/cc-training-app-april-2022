@@ -1,9 +1,15 @@
+:root {
+  box-sizing: border-box;
+  --indigo: #2dbed8;
+  --backgroundColor: #192231;
+  --foregroundColor: #24344d;
+}
+
 body {
   padding: 2rem;
   margin: 0;
-  background-color: rgb(49, 53, 60);
-
-  color: rgb(0, 229, 255);
+  background-color: var(--backgroundColor);
+  color: white;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
