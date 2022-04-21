@@ -1,10 +1,15 @@
 import "./Search.css";
 
-const Search = ({ children, onChange }: any) => {
+const Search = ({ children, onChange, searchText }: any) => {
   return (
     <div>
       <label htmlFor="searchBox">{children} </label>
-      <input id="searchBox" type="text" onChange={onChange} />
+      <input
+        value={searchText}
+        id="searchBox"
+        type="text"
+        onChange={onChange}
+      />
     </div>
   );
 };

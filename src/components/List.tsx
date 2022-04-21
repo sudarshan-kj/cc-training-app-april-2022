@@ -1,4 +1,5 @@
 import "./List.css";
+import Item from "./Item";
 
 const List = ({ listOfItems }: any) => {
   return (
@@ -13,13 +14,8 @@ const List = ({ listOfItems }: any) => {
           </tr>
         </thead>
         <tbody>
-          {listOfItems.map((item: any) => (
-            <tr key={item.objectID}>
-              <td className="itemTitle">{item.title}</td>
-              <td className="itemUrl">{item.url}</td>
-              <td>{item.author}</td>
-              <td>{item.num_comments}</td>
-            </tr>
+          {listOfItems.map(({ objectID, ...rest }: any) => (
+            <Item key={objectID} {...rest} />
           ))}
         </tbody>
       </table>
