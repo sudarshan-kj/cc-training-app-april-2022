@@ -1,12 +1,14 @@
 import "./App.css";
 import List from "./components/List";
-import Search from "./components/Search";
+import InputWithLabel from "./components/InputWithLabel";
 import logo from "./assets/logo.png";
 import usePersistence from "./hooks/usePersistence";
+import React, { useEffect, useState } from "react";
+import { StoryType } from "./types";
 
-const title = "React Training";
+const title: string = "React Training";
 
-const listOfItems = [
+const listOfItems: Array<StoryType> = [
   {
     title: "Learn React",
     url: "https://eprint.iacr.org/2021/1022",
@@ -45,19 +47,48 @@ const listOfItems = [
   },
 ];
 
-function App() {
-  const [searchText, setSearchText]: any = usePersistence(
-    "searchTerm",
-    "React"
+function getAsyncData() {
+  return new Promise((resolve, reject) =>
+    setTimeout(() => reject({ data: listOfItems }), 3000)
   );
+}
 
-  function handleChange(event: any) {
+function App(): JSX.Element {
+  const [searchText, setSearchText] = usePersistence("searchTerm", "React");
+  const [stories, setStories] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getAsyncData()
+      .finally(() => setIsLoading(false))
+      .then((value: any) => setStories(value.data))
+      .catch((e) => setIsError(true));
+  }, []);
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchText(event.target.value);
   }
 
-  const filteredList = listOfItems.filter((item: any) =>
+  function handleDeleteClick(objectId: number) {
+    const newListOfItems = stories.filter(
+      (story: StoryType) => story.objectID !== objectId
+    );
+    setStories(newListOfItems);
+  }
+
+  const filteredList = stories.filter((item: StoryType) =>
     item.title.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  if (isError) {
+    return (
+      <h1 style={{ marginTop: "10rem", color: " red" }}>
+        Something went wrong
+      </h1>
+    );
+  }
 
   return (
     <div>
@@ -66,11 +97,19 @@ function App() {
           <h1>{title}</h1>
           <img src={logo} />
         </div>
-        <Search searchText={searchText} onChange={handleChange}>
+        <InputWithLabel
+          searchText={searchText}
+          onChange={handleChange}
+          id="searchBox"
+        >
           Search
-        </Search>
+        </InputWithLabel>
       </nav>
-      <List listOfItems={filteredList} />
+      {isLoading ? (
+        <h1 style={{ marginTop: "10rem" }}>Loading</h1>
+      ) : (
+        <List listOfItems={filteredList} onClickDelete={handleDeleteClick} />
+      )}
     </div>
   );
 }

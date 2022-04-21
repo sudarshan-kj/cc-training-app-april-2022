@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 
-function usePersistence(localStorageKey: string, initValue: string) {
+function usePersistence(
+  localStorageKey: string,
+  initValue: string
+): [string, (e: string) => void] {
   const [value, setValue] = useState(
     localStorage.getItem(localStorageKey) ?? initValue
   );
