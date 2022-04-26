@@ -1,6 +1,8 @@
+import React from "react";
 import "./List.css";
 import Item from "./Item";
 import { StoryType } from "../types";
+import { useState } from "react";
 
 type ListProps = {
   listOfItems: Array<StoryType>;
@@ -34,4 +36,4 @@ const List = ({ listOfItems, onClickDelete }: ListProps) => {
   );
 };
 
-export default List;
+export default React.memo(List);

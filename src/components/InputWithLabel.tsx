@@ -8,7 +8,6 @@ type InputWithLabelProps = {
   searchText: string;
   type?: string;
   id: string;
-  onSearchSubmit: (e: FormEvent<HTMLFormElement>) => void;
 };
 
 const InputWithLabel = ({
@@ -17,15 +16,11 @@ const InputWithLabel = ({
   searchText,
   type = "text",
   id,
-  onSearchSubmit,
 }: InputWithLabelProps) => {
   return (
     <div>
-      <form onSubmit={onSearchSubmit}>
-        <label htmlFor={id}>{children} </label>
-        <input value={searchText} id={id} type={type} onChange={onChange} />
-        <button type="submit">Submit</button>
-      </form>
+      <label htmlFor={id}>{children} </label>
+      <input value={searchText} id={id} type={type} onChange={onChange} />
     </div>
   );
 };
