@@ -3,12 +3,19 @@ import List from "./components/List";
 import InputWithLabel from "./components/InputWithLabel";
 import logo from "./assets/logo.png";
 import usePersistence from "./hooks/usePersistence";
-import React, { useEffect, useMemo, useReducer, useCallback } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useReducer,
+  useCallback,
+  createContext,
+} from "react";
 import axios from "axios";
 import { useDebounce } from "./hooks/useDebounce";
 import { StateType, StoryType, ActionType } from "./types";
+import { Link } from "react-router-dom";
 
-const title: string = "React Training";
+export const title: string = "React Training";
 
 function storiesReducer(state: StateType, action: ActionType) {
   switch (action.type) {
@@ -29,6 +36,12 @@ function storiesReducer(state: StateType, action: ActionType) {
 }
 
 const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?query=";
+
+interface AppContextType {
+  onClickDelete: (e: number) => void;
+}
+
+export const AppContext = createContext<AppContextType | null>(null);
 
 function App(): JSX.Element {
   const [searchText, setSearchText] = usePersistence("searchTerm", "React");
@@ -97,11 +110,16 @@ function App(): JSX.Element {
         >
           Search
         </InputWithLabel>
+        <Link to="/login" state={{ id: "1234" }}>
+          <h6>Login</h6>
+        </Link>
       </nav>
       {stories.isLoading ? (
         <h1 style={{ marginTop: "10rem" }}>Loading</h1>
       ) : (
-        <List listOfItems={stories.data} onClickDelete={handleDeleteClick} />
+        <AppContext.Provider value={{ onClickDelete: handleDeleteClick }}>
+          <List listOfItems={stories.data} />
+        </AppContext.Provider>
       )}
     </div>
   );

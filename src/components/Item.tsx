@@ -1,21 +1,23 @@
+import { useContext } from "react";
 import { StoryType } from "../types";
+import { AppContext } from "../App";
 
 type ItemProps = {
   item: StoryType;
-  onClickDelete: (e: number) => void;
 };
 
 const Item = ({
   item: { title, url, author, num_comments, objectID },
-  onClickDelete,
 }: ItemProps) => {
+  const ctx = useContext(AppContext);
+
   return (
     <tr>
       <td className="itemTitle">{title}</td>
       <td className="itemUrl">{url}</td>
       <td>{author}</td>
       <td>{num_comments}</td>
-      <td onClick={() => onClickDelete(objectID)}>Delete</td>
+      <td onClick={() => ctx?.onClickDelete(objectID)}>Delete</td>
     </tr>
   );
 };
