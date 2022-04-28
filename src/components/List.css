@@ -37,3 +37,16 @@ th:nth-child(2),
 tr:nth-child(even) {
   background-color: var(--foregroundColor);
 }
+
+th:hover {
+  background-color: var(--indigo-dark);
+  cursor: pointer;
+}
+
+.deleteButton {
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  color: rgb(247, 83, 83);
+}

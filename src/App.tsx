@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 
 export const title: string = "React Training";
 
-function storiesReducer(state: StateType, action: ActionType) {
+export function storiesReducer(state: StateType, action: ActionType) {
   switch (action.type) {
     case "SET_STORIES":
       return { data: action.payload.data, isError: false, isLoading: false };
@@ -84,6 +84,7 @@ function App(): JSX.Element {
   }
 
   const handleDeleteClick = useCallback((objectId: number) => {
+    console.log("Delete click captured", objectId);
     dispatchStories({ type: "REMOVE_STORY", payload: { id: objectId } });
   }, []);
 

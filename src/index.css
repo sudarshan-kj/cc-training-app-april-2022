@@ -1,6 +1,7 @@
 :root {
   box-sizing: border-box;
   --indigo: #2dbed8;
+  --indigo-dark: #1aacc6;
   --backgroundColor: #192231;
   --foregroundColor: #24344d;
 }

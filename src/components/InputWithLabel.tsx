@@ -1,5 +1,5 @@
 import { count } from "console";
-import React, { FormEvent } from "react";
+import React, { useState } from "react";
 import "./InputWithLabel.css";
 
 type InputWithLabelProps = {
@@ -17,6 +17,10 @@ const InputWithLabel = ({
   type = "text",
   id,
 }: InputWithLabelProps) => {
+  const [count, setCount] = useState(() => {
+    console.log("Init state for input with label");
+    return 0;
+  });
   return (
     <div>
       <label htmlFor={id}>{children} </label>
